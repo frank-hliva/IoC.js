@@ -63,6 +63,12 @@ export class Kernel
         return this;
     }
     
+    registerType(type, lifeTime = LifeTime.perResolve)
+    {
+        this.register(type.name, type, lifeTime);
+        return this;
+    }
+    
     registerInstance(name, instance, injectSetters = false)
     {
         if (injectSetters) applySetters(this, instance);

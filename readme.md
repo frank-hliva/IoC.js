@@ -61,7 +61,7 @@ class Ninja
 let container = new Kernel();
 
 container.register("Katana", Katana);
-container.register("KatanaRepository", KatanaRepository);
+container.registerType(KatanaRepository);
 container.register("Shuriken", Shuriken);
 container.register("Ninja1", Ninja, LifeTime.singleton);
 container.register("Ninja2", Ninja, LifeTime.perResolve);
