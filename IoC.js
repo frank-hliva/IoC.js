@@ -7,12 +7,12 @@ export function inject(...names)
     }
 }
 
-export function injectSetter(arg)
+export function injectSetter(name)
 {
     return function(target, key, descriptor)
     {
         target.__setters__ = target.__setters__ || [];
-        target.__setters__.push([key, arg]);
+        target.__setters__.push([key, name]);
         return descriptor;
     }
 }
@@ -30,7 +30,7 @@ function constructorMeta(type)
 
 function settersMeta(instance)
 {
-    return instance.__setters__ || {};
+    return instance.__setters__ || [];
 }
 
 function createInstance(type, args)
