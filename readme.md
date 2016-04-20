@@ -2,7 +2,12 @@
 
 Inversion of control for JS
 
-Example:
+## Requirements:
+
+* Babel: https://babeljs.io/
+* transform-decorators-legacy plugin: https://www.npmjs.com/package/babel-plugin-transform-decorators-legacy
+
+## Example:
 
 ```js
 import { inject, injectSetter, LifeTime, Kernel } from './IoC.js';
