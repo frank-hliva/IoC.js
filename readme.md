@@ -1,3 +1,7 @@
+# IoC.JS
+
+Inversion of control for JS
+
 Example:
 
 ```js
