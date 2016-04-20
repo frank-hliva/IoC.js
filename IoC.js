@@ -86,7 +86,7 @@ export class Kernel
             applySetters(this, instance);
             if (lifeTime === LifeTime.singleton)
             {
-                this.types[name] = { instance };
+                this.types[name] = { instance, lifeTime };
             }
             return instance;
         }
