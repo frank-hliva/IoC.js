@@ -86,6 +86,11 @@ console.log("------------------------------------------------");
 container.resolve("Ninja2").name = "Al Capone";
 console.log("Ninja2 name", container.resolve("Ninja2").name); //new instance displays "Big boss"
 console.log("------------------------------------------------");
+```
+
+## Custom factory:
+
+```js
 //custom factory
 container.factoryFor("Katana", ({ kernel, type, args }) =>
 {
