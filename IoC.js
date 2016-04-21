@@ -116,7 +116,11 @@ export class Kernel
         return this;
     }
     
-    factoryFor(name, factory) { this.factories[name] = factory; }
+    factoryFor(name, factory)
+    {
+        this.factories[name] = factory;
+        return this;
+    }
     
     resolve(name)
     {
