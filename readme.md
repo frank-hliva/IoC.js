@@ -10,7 +10,7 @@ Inversion of control for JS
 ## Example:
 
 ```js
-import { inject, injectSetter, LifeTime, Kernel } from './IoC.js';
+import { inject, injectSetter, injectMethod, LifeTime, Kernel } from './IoC.js';
 
 class KatanaRepository
 {
@@ -27,7 +27,7 @@ class Katana
     {
         this._katanaRepository = katanaRepository;
     }
-    
+
     hit()
     {
         return this._katanaRepository.getData();
@@ -50,9 +50,17 @@ class Ninja
         this._katana = katana;
         this._shuriken = shuriken;
     }
+    
+    @injectMethod("Katana", "Shuriken")
+    someMethod(katana, shuriken)
+    {
+        console.log("method injection katana:", katana.hit());
+        console.log("method injection shuriken:", shuriken.throw());
+    }
+    
     fight() { return this._katana.hit(); };
     sneak() { return this._shuriken.throw(); };
-    
+
     @injectSetter("ninjaName")
     set name(name) { this._name = name }
     get name() { return this._name; }
@@ -75,5 +83,5 @@ container.resolve("Ninja1").name = "Don Corleone";
 console.log("Ninja1 name", container.resolve("Ninja1").name); //singleton
 console.log("------------------------------------------------");
 container.resolve("Ninja2").name = "Al Capone";
-console.log("Ninja2 name", container.resolve("Ninja2").name); //new instance
+console.log("Ninja2 name", container.resolve("Ninja2").name); //new instance displays "Big boss"
 ```

@@ -1,8 +1,15 @@
+const prop = 
+{
+    constructor: "__constructor__",
+    setters: "__setters__",
+    methods: "__methods__"
+}
+
 export function inject(...names)
 {
     return function(target)
     {
-        target.__constructor__ = names;
+        target[prop.constructor] = names;
         return target;
     }
 }
@@ -11,8 +18,18 @@ export function injectSetter(name)
 {
     return function(target, key, descriptor)
     {
-        target.__setters__ = target.__setters__ || [];
-        target.__setters__.push([key, name]);
+        target[prop.setters] = target[prop.setters] || [];
+        target[prop.setters].push([key, name]);
+        return descriptor;
+    }
+}
+
+export function injectMethod(...names)
+{
+    return function(target, key, descriptor)
+    {
+        target[prop.methods] = target[prop.methods] || [];
+        target[prop.methods].push([key, names]);
         return descriptor;
     }
 }
@@ -23,22 +40,16 @@ export const LifeTime =
     singleton: 1
 }
 
-function constructorMeta(type)
-{
-    return type.__constructor__ || [];
-}
-
-function settersMeta(instance)
-{
-    return instance.__setters__ || [];
-}
+function constructorMeta(type) { return type[prop.constructor] || []; }
+function settersMeta(instance) { return instance[prop.setters] || []; }
+function methodsMeta(instance) { return instance[prop.methods] || []; }
 
 function createInstance(type, args)
 {
     return new (type.bind.apply(type, [type].concat(args)));
 }
 
-function applySetters(kernel, instance)
+function injectSetters(kernel, instance)
 {
     const setters = settersMeta(instance);
     for (let i = 0, len = setters.length; i < len; i++)
@@ -46,6 +57,22 @@ function applySetters(kernel, instance)
         const [prop, name] = setters[i];
         instance[prop] = kernel.resolve(name);
     }
+}
+
+function injectMethods(kernel, instance)
+{
+    const methods = methodsMeta(instance);
+    for (let i = 0, len = methods.length; i < len; i++)
+    {
+        const [prop, names] = methods[i];
+        instance[prop].apply(instance, names.map(n => kernel.resolve(n)));
+    }
+}
+
+function injectAllMembers(kernel, instance)
+{
+    injectSetters(kernel, instance);
+    injectMethods(kernel, instance);
 }
 
 export class Kernel
@@ -56,6 +83,11 @@ export class Kernel
     }
     
     get types() { return this._types; }
+    
+    contains(name)
+    {
+        return this.types[name] !== undefined;
+    }
     
     register(name, type, lifeTime = LifeTime.perResolve)
     {
@@ -69,9 +101,12 @@ export class Kernel
         return this;
     }
     
-    registerInstance(name, instance, injectSetters = false)
+    registerInstance(name, instance, injectMembers = false)
     {
-        if (injectSetters) applySetters(this, instance);
+        if (injectMembers)
+        {
+            injectAllMembers(this, instance);
+        }
         this.types[name] = {
             instance,
             lifeTime: LifeTime.singleton
@@ -89,7 +124,7 @@ export class Kernel
                 { type, lifeTime } = item,
                 args = constructorMeta(type).map(n => this.resolve(n)),
                 instance = createInstance(type, args);
-            applySetters(this, instance);
+            injectAllMembers(this, instance);
             if (lifeTime === LifeTime.singleton)
             {
                 this.types[name] = { instance, lifeTime };
@@ -99,4 +134,4 @@ export class Kernel
     }
 }
 
-export default { inject, injectSetter, LifeTime, Kernel }
+export default { inject, injectSetter, injectMethod, LifeTime, Kernel }
