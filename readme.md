@@ -80,7 +80,7 @@ console.log("Ninja1 name", ninja1.name);
 console.log("Ninja1 fight", ninja1.fight());
 console.log("Ninja1 sneak", ninja1.sneak());
 container.resolve("Ninja1").name = "Don Corleone";
-console.log("Ninja1 name", container.resolve("Ninja1").name); //singleton
+console.log("Ninja1 name", container.resolve("Ninja1").name); //singleton displays "Don Corleone"
 console.log("------------------------------------------------");
 container.resolve("Ninja2").name = "Al Capone";
 console.log("Ninja2 name", container.resolve("Ninja2").name); //new instance displays "Big boss"
