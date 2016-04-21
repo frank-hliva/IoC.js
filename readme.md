@@ -50,14 +50,14 @@ class Ninja
         this._katana = katana;
         this._shuriken = shuriken;
     }
-    
+
     @injectMethod("Katana", "Shuriken")
     someMethod(katana, shuriken)
     {
         console.log("method injection katana:", katana.hit());
         console.log("method injection shuriken:", shuriken.throw());
     }
-    
+
     fight() { return this._katana.hit(); };
     sneak() { return this._shuriken.throw(); };
 
@@ -73,6 +73,7 @@ container.registerType(KatanaRepository);
 container.register("Shuriken", Shuriken);
 container.register("Ninja1", Ninja, LifeTime.singleton);
 container.register("Ninja2", Ninja, LifeTime.perResolve);
+container.register("Ninja3", Ninja, LifeTime.perResolve);
 container.registerInstance("ninjaName", "Big boss");
 
 let ninja1 = container.resolve("Ninja1");
@@ -84,4 +85,13 @@ console.log("Ninja1 name", container.resolve("Ninja1").name); //singleton displa
 console.log("------------------------------------------------");
 container.resolve("Ninja2").name = "Al Capone";
 console.log("Ninja2 name", container.resolve("Ninja2").name); //new instance displays "Big boss"
+console.log("------------------------------------------------");
+//custom factory
+container.factoryFor("Katana", ({ kernel, type, args }) =>
+{
+    console.log("Katana factory");
+    return new type(kernel.resolve("KatanaRepository"));
+});
+let katana = container.resolve("Katana");
+console.log(katana.hit());
 ```

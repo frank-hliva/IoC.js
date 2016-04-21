@@ -80,9 +80,11 @@ export class Kernel
     constructor()
     {
         this._types = {};
+        this._factories = {};
     }
     
     get types() { return this._types; }
+    get factories() { return this._factories; }
     
     contains(name)
     {
@@ -114,6 +116,8 @@ export class Kernel
         return this;
     }
     
+    factoryFor(name, factory) { this.factories[name] = factory; }
+    
     resolve(name)
     {
         const item = this.types[name];
@@ -123,7 +127,10 @@ export class Kernel
             const
                 { type, lifeTime } = item,
                 args = constructorMeta(type).map(n => this.resolve(n)),
-                instance = createInstance(type, args);
+                factory = this.factories[name],
+                instance = factory ?
+                    factory({ kernel: this, type, args }) :
+                    createInstance(type, args);
             injectAllMembers(this, instance);
             if (lifeTime === LifeTime.singleton)
             {
