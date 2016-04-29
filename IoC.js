@@ -143,6 +143,8 @@ export class Kernel
             return instance;
         }
     }
+    
+    getType(name) { return this.types[name].type; }
 }
 
 export default { inject, injectSetter, injectMethod, LifeTime, Kernel }
