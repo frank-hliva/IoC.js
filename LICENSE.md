@@ -1,5 +1,4 @@
-The "New" BSD License:
-----------------------
+# The "New" BSD License:
 
 Copyright (c) 2011-2016, Frank Hliva
 All rights reserved.
