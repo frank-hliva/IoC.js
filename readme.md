@@ -1,6 +1,6 @@
 # IoC.JS
 
-Inversion of control for JS
+Inversion of control for JS version 1.0.1
 
 ## Requirements:
 

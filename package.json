@@ -1,6 +1,6 @@
 {
   "name": "ioc.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Inversion Of Control for ECMA Script 7",
   "main": "build/IoC.js",
   "dependencies": {
