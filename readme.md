@@ -7,6 +7,10 @@ Inversion of control for JS
 * Babel: https://babeljs.io/
 * transform-decorators-legacy plugin: https://www.npmjs.com/package/babel-plugin-transform-decorators-legacy
 
+## License:
+
+https://github.com/xxar3s/IoC.js/blob/master/LICENSE.md
+
 ## Example:
 
 ```js
