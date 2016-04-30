@@ -21,6 +21,8 @@ exports.inject = inject;
 exports.injectSetter = injectSetter;
 exports.injectMethod = injectMethod;
 
+require("babel-polyfill");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var prop = {
