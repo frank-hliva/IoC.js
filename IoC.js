@@ -1,5 +1,3 @@
-import "babel-polyfill"
-
 const prop = 
 {
     constructor: "__constructor__",
