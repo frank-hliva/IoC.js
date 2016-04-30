@@ -2,7 +2,7 @@
   "name": "ioc.js",
   "version": "1.0.1",
   "description": "Inversion Of Control for ECMA Script 7",
-  "main": "build/IoC.js",
+  "main": "lib/IoC.js",
   "dependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
     "babel-plugin-transform-runtime": "^6.7.5",
