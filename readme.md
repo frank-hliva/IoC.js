@@ -11,7 +11,7 @@ Inversion of control for JS
 
 https://github.com/xxar3s/IoC.js/blob/master/LICENSE.md
 
-## Example:
+## Examples:
 
 ```js
 import { inject, injectSetter, injectMethod, LifeTime, Kernel } from './IoC.js';
