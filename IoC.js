@@ -129,7 +129,7 @@ export class Kernel
                 args = constructorMeta(type).map(n => this.resolve(n)),
                 factory = this.factories[name],
                 instance = factory ?
-                    factory({ kernel: this, type, args }) :
+                    factory({ kernel: this, type, args, createInstance }) :
                     createInstance(type, args);
             injectAllMembers(this, instance);
             if (lifeTime === LifeTime.singleton)
