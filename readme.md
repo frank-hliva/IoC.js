@@ -9,7 +9,7 @@ Inversion of control for JS version 1.0.1
 
 ## License:
 
-https://github.com/xxar3s/IoC.js/blob/master/LICENSE.md
+https://github.com/frank-hliva/IoC.js/blob/master/LICENSE.md
 
 ## Examples:
 
